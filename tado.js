@@ -11,10 +11,10 @@ Module.register("tado",{
 
 	// Default module config.
 	defaults: {
-		tado_username: "",
-		tado_password: "",
-		tado_home_number: "",
-		tado_zone_number: "", // most likely 1
+		tado_username: "", // set in config/config.js 
+		tado_password: "", // set in config/config.js
+		tado_home_number: "", // set in config/config.js
+		tado_zone_number: "", // // set in config/config.js
 		units: config.units,
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
 		animationSpeed: 1000,
