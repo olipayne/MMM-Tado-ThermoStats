@@ -80,9 +80,7 @@ Module.register("tado",{
 
 		//Log.info(this);
 
-		wrapper.innerHTML = 'Current Temp: ' + this.current_temperature + '&deg;C <i class="fa fa-fire"></i> <i class="fa fa-snowflake-o"></i>';
-		wrapper.innerHTML += '<br>';
-		wrapper.innerHTML += 'Current Temp: ' + this.target_temperature + '&deg;C <i class="fa fa-fire"></i> <i class="fa fa-snowflake-o"></i>';
+		wrapper.innerHTML = this.current_temperature + '&deg;C' + '&nbsp' + '/' + '&nbsp' + this.target_temperature + '&deg;C';
 		return wrapper;
 	},
 
