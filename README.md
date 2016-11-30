@@ -72,7 +72,7 @@ The following properties need to be configured:
         </tr>
         <tr>
             <td><code>tado_home_number</code></td>
-            <td><b>Required</b> - This is your Tado home ID number. You can find this out a number of ways, the easiest is to run the scrit here https://raw.githubusercontent.com/olipayne/MMM-Tado-ThermoStats/master/findHomeID.sh again changing your username and password.<br>
+            <td><b>Required</b> - This is your Tado home ID number. You can find this out a number of ways, the easiest is to run the script here https://raw.githubusercontent.com/olipayne/MMM-Tado-ThermoStats/master/findHomeID.sh again changing your username and password.<br>
             </td>
         </tr>
         <tr>
