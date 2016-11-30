@@ -34,7 +34,7 @@ git pull
 To use this module, add it to the modules array in the `config/config.js` file:
 ````javascript
 modules: [
-                    {
+                {
                         module: 'tado',
                         position: 'bottom_right',
                         config: {
