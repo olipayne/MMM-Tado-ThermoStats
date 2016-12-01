@@ -161,15 +161,23 @@ Module.register("tado",{
 			return;
 		}
 
-		if (this.config.units == 'metric') {
-			this.current_temperature = data.sensorDataPoints.insideTemperature.celsius;
-			this.target_temperature = data.setting.temperature.celsius;
+		if (data.sensorDataPoints.insideTemperature) {
+
+			if (this.config.units == 'metric') {
+				this.current_temperature = data.sensorDataPoints.insideTemperature.celsius;
+				this.target_temperature = data.setting.temperature.celsius;
+			} else {
+				this.current_temperature = data.sensorDataPoints.insideTemperature.fahrenheit;
+				this.target_temperature = data.setting.temperature.fahrenheit;
+			}
+
 		} else {
-			this.current_temperature = data.sensorDataPoints.insideTemperature.fahrenheit;
-			this.target_temperature = data.setting.temperature.fahrenheit;
+
+			this.current_temperature = '-';
+			this.target_temperature = '-';
+
 		}
-
-
+		
 		this.loaded = true;
 		this.updateDom(this.config.animationSpeed);
 	},
