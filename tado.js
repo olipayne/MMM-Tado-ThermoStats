@@ -15,6 +15,7 @@ Module.register("tado",{
 		tado_password: "", // set in config/config.js
 		tado_home_number: "", // only needs to be set if you have more than 1 home
 		tado_zone_number: "1", // // only needs to be set if you have more than 1 zone
+		home_icon: "home",
 		units: config.units,
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
 		animationSpeed: 1000,
@@ -78,7 +79,19 @@ Module.register("tado",{
 			return wrapper;
 		}
 
-		wrapper.innerHTML = this.current_temperature + '&deg;C' + '&nbsp' + '/' + '&nbsp' + this.target_temperature + '&deg;C';
+		wrapper.innerHTML = '';
+		if (this.config.home_icon != '') {
+			wrapper.innerHTML += '<i class="fa fa-' + this.config.home_icon + '"></i> | ';
+		}
+
+		wrapper.innerHTML += this.current_temperature;
+		if (this.config.units == 'metric') {
+			var temp_symbol = 'C';
+		} else {
+			var temp_symbol = 'F';
+		}
+
+		wrapper.innerHTML += '&deg;' + temp_symbol + ' | ' + this.target_temperature + '&deg;' + temp_symbol;
 		return wrapper;
 	},
 
@@ -148,9 +161,14 @@ Module.register("tado",{
 			return;
 		}
 
+		if (this.config.units == 'metric') {
+			this.current_temperature = data.sensorDataPoints.insideTemperature.celsius;
+			this.target_temperature = data.setting.temperature.celsius;
+		} else {
+			this.current_temperature = data.sensorDataPoints.insideTemperature.fahrenheit;
+			this.target_temperature = data.setting.temperature.fahrenheit;
+		}
 
-		this.current_temperature = data.sensorDataPoints.insideTemperature.celsius;
-		this.target_temperature = data.setting.temperature.celsius;
 
 		this.loaded = true;
 		this.updateDom(this.config.animationSpeed);
