@@ -13,15 +13,15 @@ Module.register("tado",{
 	defaults: {
 		tado_username: "", // set in config/config.js 
 		tado_password: "", // set in config/config.js
-		tado_home_number: "", // set in config/config.js
-		tado_zone_number: "", // // set in config/config.js
+		tado_home_number: "", // only needs to be set if you have more than 1 home
+		tado_zone_number: "1", // // only needs to be et if you have more than 1 zone
 		units: config.units,
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
 		animationSpeed: 1000,
 		lang: config.language,
 		initialLoadDelay: 0, // 0 seconds delay
 		retryDelay: 2500,
-		apiBase: "https://my.tado.com/api/v2/homes"
+		apiBase: "https://my.tado.com/api/v2"
 
 	},
 
@@ -78,8 +78,6 @@ Module.register("tado",{
 			return wrapper;
 		}
 
-		//Log.info(this);
-
 		wrapper.innerHTML = this.current_temperature + '&deg;C' + '&nbsp' + '/' + '&nbsp' + this.target_temperature + '&deg;C';
 		return wrapper;
 	},
@@ -89,19 +87,47 @@ Module.register("tado",{
 	 * Calls processTado on succesfull response.
 	 */
 	updateTado: function() {
-		var url = this.config.apiBase + "/" + this.config.tado_home_number + "/zones/" + this.config.tado_zone_number + "/state?username=" + this.config.tado_username +  "&password=" + this.config.tado_password;
 		var self = this;
 		var retry = true;
-
-		var tadoRequest = new XMLHttpRequest();
-		tadoRequest.open("GET", url, true);
-		tadoRequest.onreadystatechange = function() {
+		// Let's see if we can intelligently find the home_id first.
+		var me_url = this.config.apiBase + "/me?username=" + this.config.tado_username +  "&password=" + this.config.tado_password;
+		var tadoHomeRequest = new XMLHttpRequest();
+		tadoHomeRequest.open("GET", me_url, true);
+		tadoHomeRequest.onreadystatechange = function() {
 			if (this.readyState === 4) {
 				if (this.status === 200) {
-					self.processTado(JSON.parse(this.response));
+					var response = JSON.parse(this.response);
+					var homes = response.homes;
+					if (homes.length > 1) {
+						Log.error('More than 1 home found, please set tado_home_number');
+						retry = false;
+						return false;
+					} else {
+						self.config.tado_home_number = homes[0].id;
+						var url = self.config.apiBase + "/homes/" + self.config.tado_home_number + "/zones/" + self.config.tado_zone_number + "/state?username=" + self.config.tado_username +  "&password=" + self.config.tado_password;
+						var tadoRequest = new XMLHttpRequest();
+						tadoRequest.open("GET", url, true);
+						tadoRequest.onreadystatechange = function() {
+							if (this.readyState === 4) {
+								if (this.status === 200) {
+									self.processTado(JSON.parse(this.response));
+								} else if (this.status === 401) {
+									self.updateDom(self.config.animationSpeed);
+									Log.error(self.name + ": Incorrect credentials.");
+									retry = false;
+								} else {
+									Log.error(self.name + ": Could not load.");
+								}
+
+								if (retry) {
+									self.scheduleUpdate((self.loaded) ? -1 : self.config.retryDelay);
+								}
+							}
+						};
+						tadoRequest.send();
+					}
 				} else if (this.status === 401) {
 					self.updateDom(self.config.animationSpeed);
-
 					Log.error(self.name + ": Incorrect credentials.");
 					retry = false;
 				} else {
@@ -113,7 +139,7 @@ Module.register("tado",{
 				}
 			}
 		};
-		tadoRequest.send();
+		tadoHomeRequest.send();
 	},
 
 	processTado: function(data) {
