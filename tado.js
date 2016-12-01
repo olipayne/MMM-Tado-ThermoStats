@@ -171,6 +171,9 @@ Module.register("tado",{
 				this.target_temperature = data.setting.temperature.fahrenheit;
 			}
 
+		this.current_temperature = (Math.round(this.current_temperature * 10) / 10).toFixed(1);
+		this.target_temperature = (Math.round(this.target_temperature * 10) / 10).toFixed(1);
+
 		} else {
 
 			this.current_temperature = '-';
