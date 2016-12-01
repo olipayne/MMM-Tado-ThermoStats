@@ -17,7 +17,7 @@ Module.register("tado",{
 		tado_zone_number: "1", // // only needs to be set if you have more than 1 zone
 		home_icon: "home",
 		units: config.units,
-		updateInterval: 10 * 60 * 1000, // every 10 minutes
+		updateInterval: 5 * 60 * 1000, // every 5 minutes
 		animationSpeed: 1000,
 		lang: config.language,
 		initialLoadDelay: 0, // 0 seconds delay
@@ -177,7 +177,7 @@ Module.register("tado",{
 			this.target_temperature = '-';
 
 		}
-		
+
 		this.loaded = true;
 		this.updateDom(this.config.animationSpeed);
 	},
