@@ -14,7 +14,7 @@ Module.register("tado",{
 		tado_username: "", // set in config/config.js 
 		tado_password: "", // set in config/config.js
 		tado_home_number: "", // only needs to be set if you have more than 1 home
-		tado_zone_number: "1", // // only needs to be et if you have more than 1 zone
+		tado_zone_number: "1", // // only needs to be set if you have more than 1 zone
 		units: config.units,
 		updateInterval: 10 * 60 * 1000, // every 10 minutes
 		animationSpeed: 1000,
