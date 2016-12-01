@@ -19,7 +19,7 @@ Clone this repository:
 git clone https://github.com/olipayne/MMM-Tado-ThermoStats.git tado
 ````
 
-Configure the module in your `config/config.js` file.
+Configure the module in your `config/config.js` file. Now takes the metric or imperial as C or F in tempurature output.
 
 ## Updating the module
 
@@ -40,8 +40,8 @@ modules: [
                         config: {
                                 tado_username: 'your@email.com',
                                 tado_password: 'youPassword',
-                                tado_home_number: 'yourHomeNumber',
-                                tado_zone_number: 'yourZoneNumber',
+                                // tado_home_number: 'yourHomeNumber', //Only needed if you have more than one home on your account
+                                // tado_zone_number: 'yourZoneNumber', //Only needed if you have more than one zone on your account
                         }
                 },
 ]
@@ -72,12 +72,12 @@ The following properties need to be configured:
         </tr>
         <tr>
             <td><code>tado_home_number</code></td>
-            <td><b>Required</b> - This is your Tado home ID number. You can find this out a number of ways, the easiest is to run the script here https://raw.githubusercontent.com/olipayne/MMM-Tado-ThermoStats/master/findHomeID.sh again changing your username and password.<br>
+            <td><b>Optional</b> - This is your Tado home ID number. Automatically set if you only have one home on your account. Not sure that at the moment you can have more than one home, but the api implies it could be planned for the future by using the data set homes, not home.<br>
             </td>
         </tr>
         <tr>
             <td><code>tado_zone_number</code></td>
-            <td><b>Required</b> - This is your Tado zone ID number. I only have a single zone so a little unsure of this, but for people with a single Tado device we can assume this to be 1.<br>
+            <td><b>Optional</b> - This is your Tado zone ID number. Default is 1, if you have more zones you can change this to select which you want to disable. If wanted you can install multipule times and have a different zone for each MMM.<br>
             </td>
         </tr>
     </tbody>
