@@ -40,8 +40,8 @@ modules: [
                         config: {
                                 tado_username: 'your@email.com',
                                 tado_password: 'youPassword',
-                                // tado_home_number: 'yourHomeNumber', //Only needed if you have more than one home on your account
-                                // tado_zone_number: 'yourZoneNumber', //Only needed if you have more than one zone on your account
+                                // tado_home_number: 'yourHomeNumber', // Only needed if you have more than one home on your account
+                                // tado_zone_number: 'yourZoneNumber', // Only needed if you have more than one zone on your account
                         }
                 },
 ]
