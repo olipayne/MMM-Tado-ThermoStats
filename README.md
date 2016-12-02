@@ -9,7 +9,7 @@ A MagicMirror Module for displaying your Tado Thermostat data.
 
 ## Installation
 
-In your terminal, go to your MagicMirror's Module folder:
+In your terminal, go to your MagicMirror's Module directory:
 ````
 cd ~/MagicMirror/modules
 ````
@@ -72,15 +72,13 @@ The following properties need to be configured:
         </tr>
         <tr>
             <td><code>tado_home_number</code></td>
-            <td><b>Optional</b> - This is your Tado home ID number. Automatically set if you only have one home on your account. Not sure that at the moment you can have more than one home, but the api implies it could be planned for the future by using the data set homes, not home.<br>
+            <td><b>Optional</b> - This is your Tado home ID number. Automatically discovered if you only have one home on your account. Not sure that at the moment you can have more than one home, but the API implies it could be planned for the future by using the data set homes, not home.<br>
             </td>
         </tr>
         <tr>
             <td><code>tado_zone_number</code></td>
-            <td><b>Optional</b> - This is your Tado zone ID number. Default is 1, if you have more zones you can change this to select which you want to disable. If wanted you can install multipule times and have a different zone for each MMM.<br>
+            <td><b>Optional</b> - This is your Tado zone ID number. Default is 1, if you have more zones you can change this to select which you want to display. If wanted you can install multiple times and have a different zone for each MMM.<br>
             </td>
         </tr>
     </tbody>
 </table>
-
-I know the script is maybe not the nicest way to get the homeid, maybe sometime I will look into the module actually grabing this as well.
